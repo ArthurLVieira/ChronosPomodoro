@@ -1,20 +1,34 @@
-import Heading from './components/Heading'
-import styles from './components/Heading.module.css'
+import './styles/global.css'
+import './styles/theme.css'
 
 function App() {
-
-  const pessoa = {
-    nome: 'arthur',
-    sobrenome: 'vitor',
-    idade: 21
-  };
-
   return (
     <>
-      <Heading attribute={`${styles.heading} ${styles.fontcolor}`}>Olá mundo</Heading>
-      <Heading attribute={`${styles.heading}`} pessoa={pessoa}>Sistema diz oi</Heading>
+      <div className='container'>
+        <div className='container'>
+          <div className='content'>
+              <section>LOGO</section>
+          </div>
+        </div>
+      </div>
+
+      <div className='container'>
+        <div className='container'>
+          <div className='content'>
+              <section>MENU</section>
+          </div>
+        </div>
+      </div>
+
+      <div className='container'>
+        <div className='container'>
+          <div className='content'>
+              <section>FOOT</section>
+          </div>
+        </div>
+      </div>
     </>
-  )
+  );
 }
 
 export default App
