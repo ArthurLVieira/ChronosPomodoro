@@ -1,0 +1,22 @@
+.link {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    font-weight: bold;
+    text-decoration: none;
+    background: var(--primary);
+    color: var(--text-over-primary);
+    transition: all 0.1s ease-in-out;
+    padding: 1.2rem;
+    border-radius: 0.8rem;
+}
+
+.link:hover {
+    filter: brightness(80%);
+}
+
+.link svg {
+    width: 2.4rem;
+    height: 2.4rem;
+}
