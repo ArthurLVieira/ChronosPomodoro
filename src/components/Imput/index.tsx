@@ -21,20 +21,18 @@ const PLACEHOLDER_EXCLUDED_TYPES = new Set([
 
 type InputProps = {
   id?: string;
-  label?: string;
-  showLabel?: boolean;
+  labelText?: string;
   borderColor?: string;
   backgroundColor?: string;
   textColor?: string;
 } & React.ComponentProps<'input'>;
 
 function Input({
-  label,
-  showLabel = true,
+  id,
+  labelText,
   borderColor = 'var(--gray-300)',
   backgroundColor = 'var(--gray-800)',
   textColor = 'var(--text-default)',
-  id,
   className,
   style,
   type,
@@ -49,24 +47,22 @@ function Input({
     ...style,
   } as React.CSSProperties;
 
-  // Decide se deve renderizar o placeholder com base no tipo
   const shouldRenderPlaceholder = !PLACEHOLDER_EXCLUDED_TYPES.has(String(type));
-  const finalPlaceholder = shouldRenderPlaceholder ? placeholder : undefined;
 
   return (
     <div className={styles.container}>
-      {showLabel && label && (
+      { labelText && (
         <label htmlFor={id} className={styles.label}>
-          {label}
+          {labelText}
         </label>
       )}
       <input
         id={id}
         type={type}
-        placeholder={finalPlaceholder}
+        placeholder={shouldRenderPlaceholder ? placeholder : undefined}
         className={`${styles.input} ${className || ''}`}
         style={inputStyle}
-        {...rest} // rest pode conter outras props, mas já extraímos type e placeholder
+        {...rest}
       />
     </div>
   );

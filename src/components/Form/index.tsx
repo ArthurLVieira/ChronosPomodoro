@@ -1,5 +1,6 @@
 import Styles from './styles.module.css';
 import Input from '../Imput';
+import { Cyles } from '../Cycles';
 
 export function FormRow() {
 
@@ -9,13 +10,13 @@ export function FormRow() {
         <div className={Styles.formRow}>
           <Input
             id='teste'
-            label='E-mail'
-            showLabel={true}
-            placeholder=''
+            labelText='E-mail'
+            placeholder='teste'
             borderColor='var(--primary)'
             backgroundColor='var(--gray-900)'
             textColor='var(--text-over-primary-dark)'
-            type='string'
+            type='string' 
+            disabled
           />
         </div>
 
@@ -24,8 +25,7 @@ export function FormRow() {
         </div>
 
         <div className={Styles.formRow}>
-          <p>Ciclos</p>
-          <p>0 0 0 0 0 0 0 0</p>
+        <Cyles />
         </div>
 
         <div className={Styles.formRow}>
