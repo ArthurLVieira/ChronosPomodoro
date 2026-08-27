@@ -1,12 +1,8 @@
-.cycles-cyclesContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 1.6rem;
-}
-
 .cyclesContainer {
     display: flex;
-    gap: 0.8rem;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.6rem;
 }
 
 .cyleDot {

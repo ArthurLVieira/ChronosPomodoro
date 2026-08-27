@@ -1,9 +1,9 @@
+import type React from 'react';
+import type { HomeProps } from '../../pages/Home';
 import Styles from './styles.module.css';
 
-export function CountDown() {
+export const CountDown: React.FC<HomeProps> = ({ state }) => {
   return (
-    <div className={Styles.container}>
-      00:00
-    </div>
+    <div className={Styles.container}>{state.formattedSecondsRemaining}</div>
   );
-}
+};

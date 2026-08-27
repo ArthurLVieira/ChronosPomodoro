@@ -1,29 +1,29 @@
-.logo {
+.button {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 2.4rem;
-    padding-top: 3.2rem;
+    gap: 1.6rem;
 }
 
-.logoLink {
+.buttonlink {
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    gap: 0.5rem;
-    font-size: 4.2rems;
     font-weight: bold;
     text-decoration: none;
-    color: var(--primary);
+    background: var(--primary);
+    color: var(--text-over-primary);
     transition: all 0.1s ease-in-out;
+    padding: 1.2rem;
+    border-radius: 0.8rem;
 }
 
-.logoLink:hover {
-    filter: brightness(50%);
+.buttonlink:hover {
+    filter: brightness(80%);
 }
 
-.logoLink svg {
-    width: 6.4rem;
-    height: 6.4rem;
+.buttonLink svg {
+    width: 2.4rem;
+    height: 2.4rem;
 }

@@ -1,31 +1,26 @@
-import { Container } from './components/Container';
-import { CountDown } from './components/CountDown';
-import { Logo } from './components/Logo';
-import { Menu } from './components/Menu';
-import { FormRow } from './components/Form';
+import { useState } from 'react';
+import Home from './pages/Home';
 import './styles/global.css';
 import './styles/theme.css';
+import type { TaskStateModel } from './models/TaskStateModel';
+
+export const initialState: TaskStateModel = {
+  tasks: [],
+  secondsRemaining: 0,
+  formattedSecondsRemaining: '00:05',
+  activeTask: null,
+  currentCycle: 0,
+  config: {
+    workTime: 25,
+    shortBreakTime: 5,
+    longBreakTime: 15,
+  },
+};
 
 function App() {
-  return (
-    <>
-      <Container>
-        <Logo />
-      </Container>
+  const [state, setState] = useState<TaskStateModel>(initialState);
 
-      <Container>
-        <Menu />
-      </Container>
-
-      <Container>
-        <CountDown />
-      </Container>
-
-      <Container>
-        <FormRow />
-      </Container>
-    </>
-  );
+  return <Home setState={setState} state={state} />;
 }
 
 export default App;

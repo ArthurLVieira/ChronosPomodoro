@@ -1,13 +1,20 @@
-import { TimerIcon } from 'lucide-react';
 import Styles from './styles.module.css';
 
-export function Logo() {
-  return (
-    <div className={Styles.logo}>
-      <a className={Styles.logoLink} href="#">
-        <TimerIcon />
-        <span>Chronos</span>
-      </a>
-    </div>
-  );
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  id?: string;
+  children?: React.ReactNode;
 }
+
+const Button: React.FC<ButtonProps> = ({ id, children, ...props }) => {
+  return (
+    <>
+      <div className={Styles.button}>
+        <button id={id} className={Styles.buttonLink} {...props}>
+          {children}
+        </button>
+      </div>
+    </>
+  );
+};
+
+export default Button;

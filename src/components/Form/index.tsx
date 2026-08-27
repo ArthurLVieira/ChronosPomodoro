@@ -1,8 +1,27 @@
 import Styles from './styles.module.css';
 import Input from '../Imput';
 import { Cyles } from '../Cycles';
+import Button from '../Button';
+import { HouseIcon } from 'lucide-react';
+import type { HomeProps } from '../../pages/Home';
 
-export function FormRow() {
+export function FormRow(props: HomeProps) {
+  const { state, setState } = props;
+
+  const handleChange = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    setState(prev => {
+      return {
+        ...prev,
+        config: {
+          ...prev.config,
+          workTime: 34,
+        },
+        formattedSecondsRemaining: '23:34',
+      };
+    });
+  };
 
   return (
     <>
@@ -15,21 +34,23 @@ export function FormRow() {
             borderColor='var(--primary)'
             backgroundColor='var(--gray-900)'
             textColor='var(--text-over-primary-dark)'
-            type='string' 
+            type='string'
             disabled
           />
         </div>
 
         <div className={Styles.formRow}>
-          <p>Lorem ipsum dolor sit amet.</p>
+          <p>Próximo intervalo é de {state.config.workTime}</p>
         </div>
 
         <div className={Styles.formRow}>
-        <Cyles />
+          <Cyles />
         </div>
 
         <div className={Styles.formRow}>
-          <button>enviar</button>
+          <Button type='button' onClick={handleChange}>
+            <HouseIcon />
+          </Button>
         </div>
       </form>
     </>

@@ -1,3 +1,4 @@
+import type React from 'react';
 import styles from './styles.module.css';
 
 const PLACEHOLDER_EXCLUDED_TYPES = new Set([
@@ -16,18 +17,18 @@ const PLACEHOLDER_EXCLUDED_TYPES = new Set([
   'reset',
   'button',
   'hidden',
-  'image'
+  'image',
 ]);
 
-type InputProps = {
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   id?: string;
   labelText?: string;
   borderColor?: string;
   backgroundColor?: string;
   textColor?: string;
-} & React.ComponentProps<'input'>;
+}
 
-function Input({
+const Input: React.FC<InputProps> = ({
   id,
   labelText,
   borderColor = 'var(--gray-300)',
@@ -38,8 +39,7 @@ function Input({
   type,
   placeholder,
   ...rest
-}: InputProps) {
-
+}: InputProps) => {
   const inputStyle = {
     '--input-border-color': borderColor,
     '--input-bg': backgroundColor,
@@ -51,7 +51,7 @@ function Input({
 
   return (
     <div className={styles.container}>
-      { labelText && (
+      {labelText && (
         <label htmlFor={id} className={styles.label}>
           {labelText}
         </label>
