@@ -2,15 +2,9 @@ import React, { useEffect } from 'react';
 import MainTemplate from '../../templates/MainTemplate/index';
 import Container from '../../components/Container';
 import { CountDown } from '../../components/CountDown';
-import type { TaskStateModel } from '../../models/TaskStateModel';
 import { FormRow } from '../../components/Form';
 
-export interface HomeProps {
-  state: TaskStateModel;
-  setState: React.Dispatch<React.SetStateAction<TaskStateModel>>;
-}
-
-const Home: React.FC<HomeProps> = props => {
+const Home: React.FC = () => {
   useEffect(() => {
     document.title = 'Chonos Pomodoro';
   }, []);
@@ -18,7 +12,7 @@ const Home: React.FC<HomeProps> = props => {
   return (
     <MainTemplate>
       <Container>
-        <CountDown {...props} />
+        <CountDown />
       </Container>
 
       {/* <Container>
@@ -26,7 +20,7 @@ const Home: React.FC<HomeProps> = props => {
       </Container> */}
 
       <Container>
-        <FormRow {...props} />
+        <FormRow />
       </Container>
     </MainTemplate>
   );

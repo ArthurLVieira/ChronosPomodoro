@@ -39,7 +39,7 @@ const Input: React.FC<InputProps> = ({
   type,
   placeholder,
   ...rest
-}: InputProps) => {
+}) => {
   const inputStyle = {
     '--input-border-color': borderColor,
     '--input-bg': backgroundColor,

@@ -3,39 +3,50 @@ import Input from '../Imput';
 import { Cyles } from '../Cycles';
 import Button from '../Button';
 import { HouseIcon } from 'lucide-react';
-import type { HomeProps } from '../../pages/Home';
+import type React from 'react';
+import { useTaskContext } from '../../contexts/TaskContext';
+import { useRef, useState } from 'react';
 
-export function FormRow(props: HomeProps) {
-  const { state, setState } = props;
+export const FormRow: React.FC = () => {
+  const { state } = useTaskContext();
+  const [ taskName, setTaskName ] = useState<string>();
+  const taskNameInput = useRef<HTMLInputElement>(null);
 
-  const handleChange = (e: React.MouseEvent<HTMLButtonElement>) => {
+  function handleCreate(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    setState(prev => {
-      return {
-        ...prev,
-        config: {
-          ...prev.config,
-          workTime: 34,
-        },
-        formattedSecondsRemaining: '23:34',
-      };
-    });
-  };
+    console.log('deu certo');
+    
+  }
+
+  function handleInputTaskChange(e: React.ChangeEvent<HTMLInputElement>) {
+    e.preventDefault();
+    setTaskName(() => {
+      return e.target.value;
+    })
+  }
+
+  function handleClickChange(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+
+    console.log(taskNameInput.current?.value)
+  }
 
   return (
     <>
-      <form className={Styles.form} action=''>
+      <form onSubmit={handleCreate} className={Styles.form} action=''>
         <div className={Styles.formRow}>
           <Input
-            id='teste'
-            labelText='E-mail'
-            placeholder='teste'
+            id='task-input'
+            labelText='task'
+            placeholder='Task'
             borderColor='var(--primary)'
             backgroundColor='var(--gray-900)'
             textColor='var(--text-over-primary-dark)'
             type='string'
-            disabled
+            ref={taskNameInput}
+            // value={taskName}
+            // onChange={handleInputTaskChange}
           />
         </div>
 
@@ -48,7 +59,7 @@ export function FormRow(props: HomeProps) {
         </div>
 
         <div className={Styles.formRow}>
-          <Button type='button' onClick={handleChange}>
+          <Button type='submit' onClick={handleClickChange}>
             <HouseIcon />
           </Button>
         </div>

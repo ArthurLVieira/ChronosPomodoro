@@ -22,6 +22,7 @@
 
   /* Borda padrão: apenas inferior visível */
   border: 0.2rem solid transparent;
+  border-style: none;
   border-bottom-color: var(--input-border-color);
   border-bottom: 0.2rem solid var(--primary);
 
@@ -37,6 +38,7 @@
 /* Quando em foco: todas as bordas ganham a cor definida */
 .input:focus {
   border-radius: 0.8rem;
+  border-style: groove;
   outline: none;
   border-color: var(--input-border-color);
 }
