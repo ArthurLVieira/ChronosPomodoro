@@ -4,8 +4,7 @@ import './styles/global.css';
 import './styles/theme.css';
 
 function App() {
-
-  return(
+  return (
     <TaskContextProvider>
       <Home />
     </TaskContextProvider>

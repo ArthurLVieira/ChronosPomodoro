@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import MainTemplate from '../../templates/MainTemplate/index';
 import Container from '../../components/Container';
 import { CountDown } from '../../components/CountDown';
-import { FormRow } from '../../components/Form';
+import { MainForm } from '../../components/MainForm';
 
 const Home: React.FC = () => {
   useEffect(() => {
@@ -15,12 +15,8 @@ const Home: React.FC = () => {
         <CountDown />
       </Container>
 
-      {/* <Container>
-        <MainForm />
-      </Container> */}
-
       <Container>
-        <FormRow />
+        <MainForm />
       </Container>
     </MainTemplate>
   );

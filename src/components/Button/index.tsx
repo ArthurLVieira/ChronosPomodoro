@@ -1,18 +1,16 @@
 import Styles from './styles.module.css';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  id?: string;
-  children?: React.ReactNode;
+  icon: React.ReactNode;
+  color?: 'green' | 'red';
 }
 
-const Button: React.FC<ButtonProps> = ({ id, children, ...props }) => {
+const Button: React.FC<ButtonProps> = ({ icon, color = 'green', ...props }) => {
   return (
     <>
-      <div className={Styles.button}>
-        <button id={id} className={Styles.buttonLink} {...props}>
-          {children}
-        </button>
-      </div>
+      <button className={`${Styles.button} ${Styles[color]}`} {...props}>
+        {icon}
+      </button>
     </>
   );
 };

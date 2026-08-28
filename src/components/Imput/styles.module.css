@@ -8,7 +8,7 @@
 .label {
   font-weight: 600;
   margin-bottom: 0.25rem;
-  font-size: 0.9rem;
+  font-size: 1.3rem;
   color: var(--text-muted, #aab3cc); /* fallback caso a variável não exista */
 }
 

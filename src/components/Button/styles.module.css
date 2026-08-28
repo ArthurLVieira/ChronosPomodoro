@@ -1,29 +1,33 @@
 .button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.6rem;
+  border: none;
+  background: var(--primary);
+  color: var(--text-over-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24rem;
+  padding: 0.8rem;
+  border-radius: 0.8rem;
+  margin: 4.8rem 0;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
 }
 
-.buttonlink {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    font-weight: bold;
-    text-decoration: none;
-    background: var(--primary);
-    color: var(--text-over-primary);
-    transition: all 0.1s ease-in-out;
-    padding: 1.2rem;
-    border-radius: 0.8rem;
+.button svg {
+  width: 3.2rem;
+  height: 3.2rem;
 }
 
-.buttonlink:hover {
-    filter: brightness(80%);
+.button:hover {
+  filter: brightness(80%);
 }
 
-.buttonLink svg {
-    width: 2.4rem;
-    height: 2.4rem;
+.green {
+  background: var(--primary);
+  color: var(--text-over-primary);
+}
+
+.red {
+  background: var(--error);
+  color: var(--text-over-error);
 }
