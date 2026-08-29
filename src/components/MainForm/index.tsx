@@ -54,6 +54,18 @@ export const MainForm: React.FC = () => {
     });
   }
 
+  function handleInterruptTask(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    e.preventDefault();
+    setState(prev => {
+      return {
+        ...prev,
+        activeTask: null,
+        secondsRemaining: 0,
+        formattedSecondsRemaining: '00:00',
+      };
+    });
+  };
+
   return (
     <>
       <form onSubmit={handleCreate} className='form' action=''>
@@ -85,20 +97,24 @@ export const MainForm: React.FC = () => {
         )}
 
         <div className='formRow'>
-          {!state.activeTask ? (
+          {!state.activeTask && (
             <Button
+              key='initTask'
               aria-label='Iniciar nova tarefa'
               title='Iniciar nova tarefa'
               type='submit'
               icon={<PlayCircleIcon />}
             />
-          ) : (
+          )} 
+          {!!state.activeTask &&(
             <Button
+              key='breakTask'
               aria-label='Parar tarefa'
               title='Parar tarefa'
               type='button'
               icon={<StopCircleIcon />}
               color='red'
+              onClick={handleInterruptTask}
             />
           )}
         </div>
