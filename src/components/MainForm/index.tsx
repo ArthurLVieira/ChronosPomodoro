@@ -3,12 +3,12 @@ import Cyles from '../Cycles';
 import Button from '../Button';
 import { PlayCircleIcon, StopCircleIcon } from 'lucide-react';
 import type React from 'react';
-import { useTaskContext } from '../../contexts/TaskContext';
 import type { TaskModel } from '../../models/TaskModel';
 import { GetNextCycle } from '../../utils/getNextCycle';
 import { GetNextCycleType } from '../../utils/getNextCycleType';
 import { FormatSecondsToMinutes } from '../../utils/formatSecondsToMinutes';
 import { useRef } from 'react';
+import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
 
 export const MainForm: React.FC = () => {
   const { state, setState } = useTaskContext();
@@ -54,7 +54,9 @@ export const MainForm: React.FC = () => {
     });
   }
 
-  function handleInterruptTask(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+  function handleInterruptTask(
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) {
     e.preventDefault();
     setState(prev => {
       return {
@@ -62,9 +64,14 @@ export const MainForm: React.FC = () => {
         activeTask: null,
         secondsRemaining: 0,
         formattedSecondsRemaining: '00:00',
+        tasks: prev.tasks.map(task => {
+          return prev.activeTask && prev.activeTask.id === task.id
+            ? { ...task, interruptDate: Date.now() }
+            : task;
+        }),
       };
     });
-  };
+  }
 
   return (
     <>
@@ -105,8 +112,8 @@ export const MainForm: React.FC = () => {
               type='submit'
               icon={<PlayCircleIcon />}
             />
-          )} 
-          {!!state.activeTask &&(
+          )}
+          {!!state.activeTask && (
             <Button
               key='breakTask'
               aria-label='Parar tarefa'
