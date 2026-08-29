@@ -1,8 +1,8 @@
 import type React from 'react';
-import { useTaskContext } from '../../contexts/TaskContext';
 import { GetNextCycle } from '../../utils/getNextCycle';
 import { GetNextCycleType } from '../../utils/getNextCycleType';
 import Styles from './styles.module.css';
+import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
 
 const Cyles: React.FC = () => {
   const { state } = useTaskContext();
