@@ -4,16 +4,15 @@ import Button from '../Button';
 import { PlayCircleIcon, StopCircleIcon } from 'lucide-react';
 import type React from 'react';
 import type { TaskModel } from '../../models/TaskModel';
-import { GetNextCycle } from '../../utils/getNextCycle';
 import { GetNextCycleType } from '../../utils/getNextCycleType';
-import { FormatSecondsToMinutes } from '../../utils/formatSecondsToMinutes';
 import { useRef } from 'react';
 import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
+import { TaskAcontionType } from '../../contexts/TaskContext/taskActions';
+import Tips from '../Tips';
 
 export const MainForm: React.FC = () => {
-  const { state, setState } = useTaskContext();
+  const { state, dispatch } = useTaskContext();
   const taskNameInput = useRef<HTMLInputElement>(null);
-  const nextCycle = GetNextCycle({ currentCycle: state.currentCycle });
   const nextCycleType = GetNextCycleType({ currentCycle: state.currentCycle });
 
   function handleCreate(e: React.SubmitEvent<HTMLFormElement>) {
@@ -37,40 +36,15 @@ export const MainForm: React.FC = () => {
       type: nextCycleType,
     };
 
-    const secondsRemaining = newTask.duration * 60;
-
-    setState(prev => {
-      return {
-        ...prev,
-        config: { ...prev.config },
-        activeTask: newTask,
-        currentCycle: nextCycle,
-        secondsRemaining,
-        formattedSecondsRemaining: FormatSecondsToMinutes({
-          seconds: secondsRemaining,
-        }),
-        tasks: [...prev.tasks, newTask],
-      };
-    });
+    dispatch({ type: TaskAcontionType.START_TASK, payload: newTask });
   }
 
   function handleInterruptTask(
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) {
     e.preventDefault();
-    setState(prev => {
-      return {
-        ...prev,
-        activeTask: null,
-        secondsRemaining: 0,
-        formattedSecondsRemaining: '00:00',
-        tasks: prev.tasks.map(task => {
-          return prev.activeTask && prev.activeTask.id === task.id
-            ? { ...task, interruptDate: Date.now() }
-            : task;
-        }),
-      };
-    });
+
+    dispatch({ type: TaskAcontionType.INTERRUPT_TASK });
   }
 
   return (
@@ -91,10 +65,7 @@ export const MainForm: React.FC = () => {
         </div>
 
         <div className='formRow'>
-          <p>
-            Próximo <strong>intervalo</strong> é de{' '}
-            <strong>{state.config.workTime}</strong>
-          </p>
+          <Tips nextCycleType={nextCycleType} />
         </div>
 
         {state.currentCycle > 0 && (
