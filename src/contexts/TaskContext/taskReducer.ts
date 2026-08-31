@@ -33,7 +33,7 @@ export function taskReducer(
         formattedSecondsRemaining: '00:00',
         tasks: state.tasks.map(task => {
           return state.activeTask && state.activeTask.id === task.id
-            ? { ...task, interruptDate: Date.now() }
+            ? { ...task, completeDate: Date.now() }
             : task;
         }),
       };
@@ -59,9 +59,9 @@ export function taskReducer(
       return {
         ...state,
         secondsRemaining: action.payload.secondsRemaining,
-        formattedSecondsRemaining: FormatSecondsToMinutes(
-          action.payload.secondsRemaining,
-        ),
+        formattedSecondsRemaining: FormatSecondsToMinutes({
+          seconds: action.payload.secondsRemaining,
+        }),
       };
     }
   }

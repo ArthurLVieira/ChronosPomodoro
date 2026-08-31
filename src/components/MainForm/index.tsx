@@ -9,6 +9,7 @@ import { useRef } from 'react';
 import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
 import { TaskAcontionType } from '../../contexts/TaskContext/taskActions';
 import Tips from '../Tips';
+import { showMessage } from '../../adapters/ShowMessage';
 
 export const MainForm: React.FC = () => {
   const { state, dispatch } = useTaskContext();
@@ -20,7 +21,7 @@ export const MainForm: React.FC = () => {
 
     if (taskNameInput.current === null) return;
     else if (!taskNameInput.current.value.trim()) {
-      alert('Task deve estar preenchida!');
+      showMessage.warning('Task deve estar preenchida!');
       return;
     }
 
@@ -37,6 +38,8 @@ export const MainForm: React.FC = () => {
     };
 
     dispatch({ type: TaskAcontionType.START_TASK, payload: newTask });
+
+    showMessage.seccess('Tarefa iniciada.');
   }
 
   function handleInterruptTask(
@@ -45,6 +48,8 @@ export const MainForm: React.FC = () => {
     e.preventDefault();
 
     dispatch({ type: TaskAcontionType.INTERRUPT_TASK });
+
+    showMessage.info('Tarefa interrompida.');
   }
 
   return (
