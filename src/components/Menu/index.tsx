@@ -1,56 +1,64 @@
-import { HistoryIcon, HouseIcon, MoonIcon, SettingsIcon, SunIcon, TimerIcon } from 'lucide-react';
-import { Link } from '../Link';
+import {
+  HistoryIcon,
+  HouseIcon,
+  MoonIcon,
+  SettingsIcon,
+  SunIcon,
+} from 'lucide-react';
+import { MenuLink } from '../Link';
 import Styles from './styles.module.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 export function Menu() {
+  type prevTheme = 'dark' | 'light';
 
-  type prevTheme = 'dark' | 'ligth';
-
-  const [ theme, setTheme ] = useLocalStorage<prevTheme>('theme', 'dark');
+  const [theme, setTheme] = useLocalStorage<prevTheme>('theme', 'dark');
 
   function hendleThemeChange(
     evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ) {
     evt.preventDefault();
     setTheme(prev => {
-      const nextTheme = prev === 'dark' ? 'ligth' : 'dark';
+      const nextTheme = prev === 'dark' ? 'light' : 'dark';
       return nextTheme;
-    })
+    });
   }
 
   const nextThemeIcon = {
-    dark: <SunIcon/>,
-    ligth: <MoonIcon/>
+    dark: <SunIcon />,
+    light: <MoonIcon />,
   };
 
-  useLocalStorage('theme', useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [ theme ]));
+  useLocalStorage(
+    'theme',
+    useEffect(() => {
+      document.documentElement.setAttribute('data-theme', theme);
+    }, [theme]),
+  );
 
   return (
     <nav className={Styles.menu}>
-        <Link>
-          <HouseIcon />  
-        </Link>
+      <MenuLink to='/' aria-label='Home' title='Home'>
+        <HouseIcon />
+      </MenuLink>
 
-        <Link>
-          <HistoryIcon />  
-        </Link>
+      <MenuLink to='/history' aria-label='History' title='History'>
+        <HistoryIcon />
+      </MenuLink>
 
-        <Link>
-          <SettingsIcon />  
-        </Link>
+      <MenuLink to='/settings' aria-label='Settings' title='Settings'>
+        <SettingsIcon />
+      </MenuLink>
 
-        <Link
-          href='#'
-          onClick={hendleThemeChange}
-          title='Mudar tema'
-          aria-label='Mudar tema'
-        >
-          {nextThemeIcon[theme]}  
-        </Link>
+      <MenuLink
+        to='#'
+        onClick={hendleThemeChange}
+        title='Mudar tema'
+        aria-label='Mudar tema'
+      >
+        {nextThemeIcon[theme]}
+      </MenuLink>
     </nav>
   );
 }

@@ -9,12 +9,12 @@ import { useRef } from 'react';
 import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
 import { TaskAcontionType } from '../../contexts/TaskContext/taskActions';
 import Tips from '../Tips';
-import { showMessage } from '../../adapters/ShowMessage';
 
 export const MainForm: React.FC = () => {
   const { state, dispatch } = useTaskContext();
   const taskNameInput = useRef<HTMLInputElement>(null);
   const nextCycleType = GetNextCycleType({ currentCycle: state.currentCycle });
+  const lastTaskName = state.tasks[state.tasks.length - 1]?.name || '';
 
   function handleCreate(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();

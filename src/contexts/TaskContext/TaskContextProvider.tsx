@@ -41,6 +41,10 @@ export const TaskContextProvider: React.FC<TaskContextProviderProps> = ({
       worker.terminate();
     }
 
+    document.title = !!state.activeTask
+      ? `${state.formattedSecondsRemaining} - Chronos Pomodoro`
+      : 'Chronos Pomodoro';
+
     worker.postMessage(state);
   }, [worker, state]);
 

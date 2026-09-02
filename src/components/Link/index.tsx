@@ -1,20 +1,23 @@
 import React from 'react';
 import Styles from './styles.module.css';
+import RouterLink from '../RouterLink';
+import type { LinkProps } from 'react-router';
 
-interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-  children: React.ReactNode,
-  onClick?: (e) => void,
+interface MenuLinkProps extends LinkProps {
+  to: string;
+  children: React.ReactNode;
 }
 
-export const Link: React.FC<LinkProps> = ({
+export const MenuLink: React.FC<MenuLinkProps> = ({
+  to,
   children,
-  href,
-  onClick,
   ...rest
 }) => {
   return (
-      <a className={Styles.link} href={href} onClick={onClick} {...rest}>
+    <>
+      <RouterLink to={to} className={Styles.link} {...rest}>
         {children}
-      </a>
+      </RouterLink>
+    </>
   );
-}
+};
