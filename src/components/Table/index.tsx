@@ -1,8 +1,7 @@
 import type React from 'react';
-import Styles from './styles.module.css';
 
 export interface Column<T> {
-  key: typeof T | string;
+  key: T | string;
   header: string;
   render?: (row: T) => React.ReactNode;
 }
@@ -19,25 +18,29 @@ export const Table: React.FC<TableProps<T>> = ({
   className,
 }) => {
   return (
-    <table className={`${Styles.responsiveTable} ${className || ''}`}>
-      <thead>
-        <tr>
-          {columns.map(column => (
-            <th key={column.key}>{column.header}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {data.map((row, rowIndex) => (
-          <tr key={rowIndex}>
+    <div className={className || ''}>
+      <table>
+        <thead>
+          <tr>
             {columns.map(column => (
-              <td key={column.key}>
-                {column.render ? column.render(row) : (row as any)[column.key]}
-              </td>
+              <th key={column.key}>{column.header}</th>
             ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {data.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {columns.map(column => (
+                <td key={column.key}>
+                  {column.render
+                    ? column.render(row)
+                    : (row as any)[column.key]}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
