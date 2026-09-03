@@ -1,13 +1,13 @@
 import type React from 'react';
 
-interface HeadingProps {
+interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
   children: React.ReactNode;
 }
 
-const Heading: React.FC<HeadingProps> = ({ children }) => {
+const Heading: React.FC<HeadingProps> = ({ children, ...props }) => {
   return (
     <>
-      <h1>{children}</h1>
+      <h1 {...props}>{children}</h1>
     </>
   );
 };

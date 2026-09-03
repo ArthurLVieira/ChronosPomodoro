@@ -66,6 +66,7 @@ export const MainForm: React.FC = () => {
             type='string'
             ref={taskNameInput}
             disabled={!!state.activeTask}
+            defaultValue={lastTaskName}
           />
         </div>
 

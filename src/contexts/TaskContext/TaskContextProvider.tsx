@@ -5,6 +5,7 @@ import { initialTaskState } from './initialTaskState';
 import { TimerWorkerManager } from '../../Workers/TimerWorkerManager';
 import { TaskAcontionType } from './taskActions';
 import { loadBeep } from '../../utils/loadBeep';
+import type { TaskStateModel } from '../../models/TaskStateModel';
 
 interface TaskContextProviderProps {
   children: React.ReactNode;
@@ -13,9 +14,14 @@ interface TaskContextProviderProps {
 export const TaskContextProvider: React.FC<TaskContextProviderProps> = ({
   children,
 }) => {
-  const [state, dispatch] = useReducer(taskReducer, initialTaskState);
+  const [state, dispatch] = useReducer(taskReducer, initialTaskState, () => {
+    const storedState = localStorage.getItem('taskState');
+    return storedState
+      ? (JSON.parse(storedState) as TaskStateModel)
+      : initialTaskState;
+  });
   const worker = TimerWorkerManager.getInstance();
-  let playBeepRef = useRef<ReturnType<typeof loadBeep>>(null);
+  const playBeepRef = useRef<ReturnType<typeof loadBeep>>(null);
 
   worker.onmessage(e => {
     const countDownSeconds = e.data;
@@ -37,11 +43,13 @@ export const TaskContextProvider: React.FC<TaskContextProviderProps> = ({
   });
 
   useEffect(() => {
+    localStorage.setItem('taskState', JSON.stringify(state));
+
     if (!state.activeTask) {
       worker.terminate();
     }
 
-    document.title = !!state.activeTask
+    document.title = state.activeTask
       ? `${state.formattedSecondsRemaining} - Chronos Pomodoro`
       : 'Chronos Pomodoro';
 
