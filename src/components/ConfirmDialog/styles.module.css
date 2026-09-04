@@ -1,0 +1,117 @@
+/* Overlay ocupa toda a tela com fundo escuro semi-transparente */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Caixa do diálogo */
+.dialog {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: slideUp 0.25s ease-out;
+}
+
+.title {
+  margin: 0 0 8px 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.message {
+  margin: 0 0 20px 0;
+  font-size: 1rem;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.button {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    transform 0.1s;
+}
+
+.button:active {
+  transform: scale(0.97);
+}
+
+.cancelButton {
+  background-color: #e2e8f0;
+  color: #1e293b;
+}
+
+.cancelButton:hover {
+  background-color: #cbd5e1;
+}
+
+.confirmButton {
+  color: #fff;
+}
+
+/* Variantes */
+.info {
+  background-color: #3b82f6;
+}
+.info:hover {
+  background-color: #2563eb;
+}
+
+.warning {
+  background-color: #f59e0b;
+}
+.warning:hover {
+  background-color: #d97706;
+}
+
+.danger {
+  background-color: #ef4444;
+}
+.danger:hover {
+  background-color: #dc2626;
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

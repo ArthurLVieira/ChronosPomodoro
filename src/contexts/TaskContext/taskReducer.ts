@@ -64,5 +64,29 @@ export function taskReducer(
         }),
       };
     }
+    case TaskAcontionType.CONFIG_STATE: {
+      return {
+        ...state,
+        config: {
+          ...state.config,
+          ...action.payload,
+        },
+      };
+    }
+    case TaskAcontionType.REMOVE_TASK: {
+      return {
+        ...state,
+        tasks: state.tasks.filter(task => task.id !== action.payload),
+      };
+    }
+    case TaskAcontionType.REMOVE_ALL_TASKS: {
+      return {
+        ...state,
+        tasks: [],
+      };
+    }
+    default: {
+      return state;
+    }
   }
 }

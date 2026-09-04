@@ -7,6 +7,9 @@ export enum TaskAcontionType {
   RESET_STATE = 'RESET_STATE',
   COUNT_DOWN = 'COUNT_DOWN',
   COMPLETE_TASK = 'COMPLETE_TASK',
+  CONFIG_STATE = 'CONFIG_STATE',
+  REMOVE_TASK = 'REMOVE_TASK',
+  REMOVE_ALL_TASKS = 'REMOVE_ALL_TASKS',
 }
 
 export type TaskActionsModelWithPayload =
@@ -17,6 +20,14 @@ export type TaskActionsModelWithPayload =
   | {
       type: TaskAcontionType.COUNT_DOWN;
       payload: Pick<TaskStateModel, 'secondsRemaining'>;
+    }
+  | {
+      type: TaskAcontionType.CONFIG_STATE;
+      payload: Partial<TaskStateModel['config']>;
+    }
+  | {
+      type: TaskAcontionType.REMOVE_TASK;
+      payload: TaskModel['id'];
     };
 
 export type TaskActionsModelWithoutPayload =

@@ -9,9 +9,12 @@ import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
 import type { TaskModel } from '../../models/TaskModel';
 import { formatDate } from '../../utils/formatDate';
 import { getTaskStatus } from '../../utils/getTaskStatus';
+import { TaskAcontionType } from '../../contexts/TaskContext/taskActions';
+import { useConfirmDialogStore } from '../../stores/confirmDialogStore';
 
 export const History: React.FC = () => {
-  const { state } = useTaskContext();
+  const { state, dispatch } = useTaskContext();
+  const showConfirm = useConfirmDialogStore(state => state.showConfirm);
 
   const taskTypeDictionary = {
     workTime: 'foco',
@@ -50,7 +53,7 @@ export const History: React.FC = () => {
     {
       key: 'actions',
       header: 'Ações',
-      render: () => (
+      render: row => (
         <span className={Styles.buttonContainer}>
           <Button
             icon={<TrashIcon />}
@@ -58,7 +61,19 @@ export const History: React.FC = () => {
             aria-label='Apagar todo o histórico'
             title='Apagar histórico'
             onClick={() => {
-              // Implement the action to delete the history here
+              showConfirm(
+                {
+                  title: 'Excluir item',
+                  message: 'Deseja realmente excluir?',
+                  variant: 'danger',
+                },
+                () => console.log('Excluído'),
+              );
+
+              dispatch({
+                type: TaskAcontionType.REMOVE_TASK,
+                payload: row.id,
+              });
             }}
           />
         </span>
@@ -66,31 +81,51 @@ export const History: React.FC = () => {
     },
   ];
 
+  const handleDeleteAllTasks = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    showConfirm(
+      {
+        title: 'Excluir item',
+        message: 'Deseja realmente excluir?',
+        variant: 'danger',
+      },
+      () => console.log('Excluído'),
+    );
+
+    dispatch({
+      type: TaskAcontionType.REMOVE_ALL_TASKS,
+    });
+  };
+
   return (
     <MainTemplate>
-      <Container>
-        <Heading>
-          <span>History</span>
-          <span className={Styles.buttonContainer}>
-            <Button
-              icon={<TrashIcon />}
-              color='red'
-              aria-label='Apagar todo o histórico'
-              title='Apagar histórico'
-            />
-          </span>
-        </Heading>
-      </Container>
-
       <Container>
         {(state.tasks.length === 0 && (
           <Heading>Nenhuma tarefa encontrada 😒</Heading>
         )) || (
-          <Table
-            columns={columns}
-            data={state.tasks}
-            className={Styles.responsiveTable}
-          />
+          <>
+            <Container>
+              <Heading>History 🕰️</Heading>
+
+              <span className={Styles.buttonContainer}>
+                <Button
+                  icon={<TrashIcon />}
+                  color='red'
+                  aria-label='Apagar todo o histórico'
+                  title='Apagar histórico'
+                  type='button'
+                  onClick={handleDeleteAllTasks}
+                />
+              </span>
+            </Container>
+
+            <Table
+              columns={columns}
+              data={state.tasks}
+              className={Styles.responsiveTable}
+            />
+          </>
         )}
       </Container>
     </MainTemplate>
