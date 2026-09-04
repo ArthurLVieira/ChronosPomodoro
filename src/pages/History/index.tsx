@@ -11,10 +11,13 @@ import { formatDate } from '../../utils/formatDate';
 import { getTaskStatus } from '../../utils/getTaskStatus';
 import { TaskAcontionType } from '../../contexts/TaskContext/taskActions';
 import { useConfirmDialogStore } from '../../stores/confirmDialogStore';
+import { useCallback, useEffect } from 'react';
+import { showMessage } from '../../adapters/showMessage';
 
 export const History: React.FC = () => {
   const { state, dispatch } = useTaskContext();
   const showConfirm = useConfirmDialogStore(state => state.showConfirm);
+  const hasTasks = state.tasks.length < 0;
 
   const taskTypeDictionary = {
     workTime: 'foco',
@@ -60,30 +63,32 @@ export const History: React.FC = () => {
             color='red'
             aria-label='Apagar todo o histórico'
             title='Apagar histórico'
-            onClick={() => {
-              showConfirm(
-                {
-                  title: 'Excluir item',
-                  message: 'Deseja realmente excluir?',
-                  variant: 'danger',
-                },
-                () => console.log('Excluído'),
-              );
-
-              dispatch({
-                type: TaskAcontionType.REMOVE_TASK,
-                payload: row.id,
-              });
-            }}
+            onClick={() => hendleDelete(row)}
           />
         </span>
       ),
     },
   ];
 
+  const hendleDelete = useCallback(
+    (task: TaskModel) => {
+      showConfirm(
+        {
+          title: `Excluir task ${task.name}`,
+          message: 'Deseja realmente excluir?',
+          variant: 'danger',
+        },
+        () =>
+          dispatch({ type: TaskAcontionType.REMOVE_TASK, payload: task.id }),
+      );
+    },
+    [showConfirm, dispatch],
+  );
+
   const handleDeleteAllTasks = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
+    e.preventDefault();
     showConfirm(
       {
         title: 'Excluir item',
@@ -98,12 +103,14 @@ export const History: React.FC = () => {
     });
   };
 
+  useEffect(() => {
+    showMessage.dismiss();
+  }, []);
+
   return (
     <MainTemplate>
       <Container>
-        {(state.tasks.length === 0 && (
-          <Heading>Nenhuma tarefa encontrada 😒</Heading>
-        )) || (
+        {(hasTasks && <Heading>Nenhuma tarefa encontrada 😒</Heading>) || (
           <>
             <Container>
               <Heading>History 🕰️</Heading>

@@ -9,6 +9,7 @@ import { useRef } from 'react';
 import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
 import { TaskAcontionType } from '../../contexts/TaskContext/taskActions';
 import Tips from '../Tips';
+import { showMessage } from '../../adapters/showMessage';
 
 export const MainForm: React.FC = () => {
   const { state, dispatch } = useTaskContext();
